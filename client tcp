@@ -1,0 +1,42 @@
+import java.io.*;
+import java.net.*;
+
+public class TCPClient {
+    public static void main(String[] args) {
+        String serverHostname = "localhost";
+        Socket socket = null;
+        PrintWriter out = null;
+        BufferedReader in = null;
+
+        try {
+            // Créer un socket TCP pour se connecter au serveur
+            socket = new Socket(serverHostname, 6789);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            // Envoyer des données au serveur
+            out.println("Hello Server");
+
+            // Lire la réponse du serveur
+            String response;
+            while ((response = in.readLine()) != null) {
+                System.out.println("Serveur: " + response);
+            }
+        } catch (UnknownHostException e) {
+            System.err.println("Hôte inconnu : " + serverHostname);
+        } catch (IOException e) {
+            System.err.println("Impossible de se connecter à l'hôte : " + serverHostname);
+        } finally {
+            try {
+                if (socket != null)
+                    socket.close();
+                if (out != null)
+                    out.close();
+                if (in != null)
+                    in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+import java.net.*;
+
+public class UDPClient {
+    public static void main(String[] args) {
+        DatagramSocket clientSocket = null;
+        try {
+            // Créer un socket UDP pour le client
+            clientSocket = new DatagramSocket();
+            InetAddress IPAddress = InetAddress.getByName("localhost");
+            byte[] sendData = "Hello Server".getBytes();
+            // Préparer le paquet à envoyer
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+            // Envoyer le paquet au serveur
+            clientSocket.send(sendPacket);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (clientSocket != null)
+                clientSocket.close();
+        }
+    }
+}

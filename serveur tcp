@@ -1,0 +1,37 @@
+import java.io.*;
+import java.net.*;
+
+public class TCPServer {
+    public static void main(String[] args) {
+        ServerSocket serverSocket = null;
+        try {
+            // Créer un socket serveur TCP
+            serverSocket = new ServerSocket(6789);
+            System.out.println("Serveur en attente de connexion...");
+            // Attendre une connexion entrante
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connecté.");
+
+            // Créer des flux de communication avec le client
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+
+            // Lire les données envoyées par le client
+            String inputLine;
+            while ((inputLine = in.readLine()) != null) {
+                System.out.println("Client: " + inputLine);
+                // Envoyer une réponse au client
+                out.println("Message reçu: " + inputLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (serverSocket != null)
+                    serverSocket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
