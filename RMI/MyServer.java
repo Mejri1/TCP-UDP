@@ -7,8 +7,8 @@ public class MyServer extends UnicastRemoteObject implements MyInterface {
     }
 
     @Override
-    public String performAction(String input) throws RemoteException {
-        return "Server processed: " + input;
+    public String reverseString(String input) throws RemoteException {
+        return new StringBuilder(input).reverse().toString();
     }
 
     public static void main(String[] args) {

@@ -2,5 +2,5 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface MyInterface extends Remote {
-    String performAction(String input) throws RemoteException;
+    String reverseString(String input) throws RemoteException;
 }
