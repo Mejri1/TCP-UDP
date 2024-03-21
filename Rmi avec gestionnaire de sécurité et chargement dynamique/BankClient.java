@@ -3,6 +3,10 @@ import java.rmi.registry.*;
 
 public class BankClient {
     public static void main(String[] args) {
+        if (System.getSecurityManager() == null) {
+            System.setSecurityManager(new RMISecurityManager());
+        }
+        
         try {
             Registry registry = LocateRegistry.getRegistry("localhost", 1099);
             BankAccountFactoryInterface factory = (BankAccountFactoryInterface) registry.lookup("BankFactory");
