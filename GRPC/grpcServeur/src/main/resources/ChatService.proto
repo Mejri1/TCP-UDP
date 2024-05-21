@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+option java_package = "grpc.grpc";
+
+service ChatService {
+    rpc SendMessage(MessageRequest) returns (MessageResponse);
+    rpc GetMessagesForUser(UserRequest) returns (MessageList);
+}
+
+message MessageRequest {
+    string sender = 1;
+    string recipient = 2;
+    string message = 3;
+}
+
+message UserRequest {
+    string username = 1;
+}
+
+message MessageResponse {
+    string status = 1;
+}
+
+message Message {
+    string sender = 1;
+    string message = 2;
+}
+
+message MessageList {
+    repeated Message messages = 1;
+}
